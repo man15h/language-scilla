@@ -1,6 +1,6 @@
 {
   "name": "language-scilla",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Scilla language support in Atom",
   "author": "man15h <manish@coindelta.com>",
   "license": "MIT",
