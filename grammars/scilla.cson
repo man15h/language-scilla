@@ -1,0 +1,246 @@
+name: "Scilla",
+scopeName: "source.scilla",
+fileTypes: [
+  "scilla"
+]
+patterns: [
+  {
+    include: '#comments'
+  }
+  {
+    include: '#numbers'
+  }
+  {
+    include: '#storagetypes'
+  }
+  {
+    include: '#constants'
+  }
+  {
+    include: '#keywords'
+  }
+  {
+    include: '#strings'
+  }
+  {
+    include: '#brackets'
+  }
+  {
+    include: '#operators'
+  }
+  {
+    'begin': "(?=(contract|library|import|transition)\\s+)"
+    'end': '((?=#)|(?=//)|(?=\n)|(?=\\()|(?={))'
+    'comment': "Main keywords"
+    'patterns': [
+      {
+        captures:
+          "1":
+            name: "keyword.control.scilla"
+        match: "\\b(contract|library|import|transition)\\b"
+      }
+      {
+        captures:
+          "1":
+            name: "entity.name.function.scilla"
+          "2":
+            name: "keyword.control.scilla"
+          "3":
+            name: "entity.name.function.scilla"
+        match: "([A-Za-z_][A-Za-z0-9_]*)(?:\\s+(?:(is)|,)\\s+([A-Za-z_][A-Za-z0-9_]*))?"
+      }
+    ]
+  }
+]
+repository:
+  comments:
+    patterns: [
+      {
+        'begin': '\\(\\*'
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.definition.comment.scilla'
+        'end': '\\*\\)'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.comment.end.scilla'
+        'name': 'comment.block.scilla'
+      }
+    ]
+  numbers:
+    patterns: [
+      {
+        'match': '\\b(([0-9]+\\.?[0-9]*)|(\\.[0-9]+))((E|e)(\\+|-)?[0-9]+)?\\b'
+        'name': 'constant.numeric.scilla'
+      }
+    ]
+  storagetypes:
+    patterns: [
+      {
+        'match': '\\bBool\\b'
+        'name': 'storage.type.boolean.scilla'
+      }
+      {
+        'match': '\\b(ByStr(20|32|64)|ByStr)\\b'
+        'name': 'storage.type.byte.scilla'
+      }
+      {
+        'match': '\\b(Int(32|64|128|256)|Uint(32|64|128|256)|BNum)\\b'
+        'name': 'storage.type.numeric.scilla'
+      }
+      {
+        'match': '(?x)\\b(Map|Option|List|Pair|Message|Cons|String)\\b'
+        'name': 'storage.type.scilla'
+      }
+      {
+        'match': '#[a-z_][a-zA-Z0-9_]*'
+        'name': 'storage.type.variant.polymorphic.scilla'
+      }
+    ]
+  constants:
+    patterns: [
+      {
+        captures:
+          '1':
+            'name': 'meta.empty-typing-pair.scilla'
+          '2':
+            'name': 'meta.empty-typing-pair.parens.scilla'
+          '3':
+            'name': 'meta.empty-typing-pair.scilla'
+          'match': '(?:\\[\\s*(\\])|\\((\\))|\\(\\s*(\\)))'
+          'name': 'constant.language.pseudo-variable.scilla'
+      }
+      {
+        'match': '\\b(eq|lt|concat)\\b'
+        'name': 'keyword.operator.comparison.scilla'
+      }
+      {
+        'match': '\\b(add|sub|mul)\\b'
+        'name': 'keyword.operator.assignment.compound.scilla'
+      }
+      {
+        'match': '\\b(True|False)\\b'
+        'name': 'constant.language.boolean.scilla'
+      }
+       {
+        'match': '\\b(Nil|Zero|Succ)\\b'
+        'name': 'constant.language.null.scilla'
+      }
+      {
+        'match': '\\b-?[0-9][0-9_]*((\\.([0-9][0-9_]*([eE][+-]??[0-9][0-9_]*)?)?)|([eE][+-]??[0-9][0-9_]*))'
+        'name': 'constant.numeric.floating-point.scilla'
+      }
+      {
+        'match': '\\b(-?((0(x|X)[0-9a-fA-F][0-9a-fA-F_]*)|(0(o|O)[0-7][0-7_]*)|(0(b|B)[01][01_]*)|([0-9][0-9_]*)))L'
+        'name': 'constant.numeric.integer.int64.scilla'
+      }
+      {
+        'match': '\\b(-?((0(x|X)[0-9a-fA-F][0-9a-fA-F_]*)|(0(o|O)[0-7][0-7_]*)|(0(b|B)[01][01_]*)|([0-9][0-9_]*)))l'
+        'name': 'constant.numeric.integer.int32.scilla'
+      }
+      {
+        'match': '\\b(-?((0(x|X)[0-9a-fA-F][0-9a-fA-F_]*)|(0(o|O)[0-7][0-7_]*)|(0(b|B)[01][01_]*)|([0-9][0-9_]*)))'
+        'name': 'constant.numeric.integer.scilla'
+      }
+      {
+        'comment': 'Language constants'
+        'match': '\\b(substr|dist|sha256hash|put|get|remove|blt|badd)\\b'
+        'name': 'constant.language.scilla'
+      }
+    ]
+  keywords:
+    patterns: [
+      {
+        'match': '''(?x)
+                  \\b(send|event|match|with|end|fun|let|in|builtin|accept|import|delete|exists|Some|None|_tag|
+                  _eventname|Main|_sender|_amount|field|_recipient)\\b
+                '''
+        'name': 'keyword.control.scilla'
+      }
+      {
+        'match': '''(?x)
+                 \\b(andb|orb|negb|list_head|list_tail|list_filter|list_map|list_append|list_reverse|list_sort|
+                 list_exists|list_forall|list_find|list_zip|list_zip_with|list_unzip|list_to_map|list_nth|schnorr_sign|
+                 schnorr_verify|schnorr_gen_key_pair|to_bystr|nat_prev|is_some_zero|nat_eq|nat_to_int|uint32_to_nat_helper|
+                 uint32_to_nat|uint64_to_nat|uint128_to_nat|int32_to_nat|int64_to_nat|int128_to_nat|fst|snd|
+                 ListUtils|BoolUtils|NatUtils|PairUtils|Schnorr)\\b
+               '''
+        'name': 'support.function.builtin.scilla'
+      }
+    ]
+  strings:
+    patterns: [
+      {
+        'begin': '(?=[^\\\\])(")'
+        'beginCaptures':
+          '1':
+            'name': 'punctuation.definition.string.begin.scilla'
+        'end': '(")'
+        'endCaptures':
+          '1':
+            'name': 'punctuation.definition.string.end.scilla'
+        'name': 'string.quoted.double.scilla'
+        'patterns': [
+          {
+            'match': '\\\\$[ \\t]*'
+            'name': 'punctuation.separator.string.ignore-eol.scilla'
+          }
+          {
+            'match': '\\\\(x[a-fA-F0-9][a-fA-F0-9]|[0-2]\\d\\d|[bnrt\'"\\\\])'
+            'name': 'constant.character.string.escape.scilla'
+          }
+          {
+            'match': '\\\\[\\|\\(\\)1-9$^.*+?\\[\\]]'
+            'name': 'constant.character.regexp.escape.scilla'
+          }
+          {
+            'match': '\\\\(?!(x[a-fA-F0-9][a-fA-F0-9]|[0-2]\\d\\d|[bnrt\'"\\\\]|[\\|\\(\\)1-9$^.*+?\\[\\]]|$[ \\t]*))(?:.)'
+            'name': 'invalid.illegal.character.string.escape'
+          }
+        ]
+      }
+    ]
+  brackets:
+    patterns: [
+      {
+        'begin': '{'
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.definition.begin.bracket.curly.scilla'
+        'end': '}'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.end.bracket.curly.scilla'
+        'patterns': [
+          {
+            'include': '$self'
+          }
+        ]
+      }
+      {
+        'begin': '\\('
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.definition.begin.bracket.round.scilla'
+        'end': '\\)'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.end.bracket.round.scilla'
+        'patterns': [
+          {
+            'include': '$self'
+          }
+        ]
+      }
+      {
+        'match': '\\[|\\]'
+        'name': 'punctuation.definition.bracket.square.scilla'
+      }
+    ]
+  operators:
+    patterns: [
+      {
+        'match': "(=|!|>|<|\\||&|-\\=|\\+\\=)"
+        'name': 'keyword.control.scilla'
+      }
+    ]

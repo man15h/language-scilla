@@ -1,0 +1,16 @@
+'.source.scilla':
+  'single import':
+    'prefix': 'im'
+    'body': 'import ${1:package}'
+  'library import':
+    'prefix': 'lib'
+    'body': 'library ${1:library}'
+  'contract declaration':
+    'prefix': 'cont'
+    'body': 'contract ${1:name}'
+  'function declaration':
+    'prefix': 'tran'
+    'body': "transition $1(${2:name} : ${3:type}) \n\n${4:end}"
+  'variable declaration':
+    'prefix': 'field'
+    'body': "field ${1:name} : ${2:type} ="

@@ -1,0 +1,17 @@
+{
+  "name": "language-scilla",
+  "version": "0.1.0",
+  "description": "Scilla language support in Atom",
+  "author": "man15h <manish@coindelta.com>",
+  "license": "MIT",
+  "engines": {
+    "atom": "*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/man15h/language-scilla.git"
+  },
+  "bugs": {
+    "url": "https://github.com/man15h/language-scilla/issues"
+  }
+}

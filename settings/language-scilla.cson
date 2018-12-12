@@ -1,0 +1,9 @@
+'.source.scilla':
+  'editor':
+    'commentStart': '(* '
+    'commentEnd': ' *)'
+    'autoIndentOnPaste': false
+    'softTabs': true
+    'tabLength': 4
+    'increaseIndentPattern': '^\\s*(transition\\s+(transition))\\b.*:\\s*$'
+    'decreaseIndentPattern': '^\\s*(end|send)\\b.*:\\s*$'
