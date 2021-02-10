@@ -29,7 +29,7 @@ patterns: [
     include: '#operators'
   }
   {
-    'begin': "(?=(contract|library|import|transition)\\s+)"
+    'begin': "(?=(contract|library|import|transition|procedure)\\s+)"
     'end': '((?=#)|(?=//)|(?=\n)|(?=\\()|(?={))'
     'comment': "Main keywords"
     'patterns': [
@@ -37,7 +37,7 @@ patterns: [
         captures:
           "1":
             name: "keyword.control.scilla"
-        match: "\\b(contract|library|import|transition)\\b"
+        match: "\\b(contract|library|import|transition|procedure)\\b"
       }
       {
         captures:
@@ -152,7 +152,7 @@ repository:
     patterns: [
       {
         'match': '''(?x)
-                  \\b(send|event|match|with|end|fun|let|in|builtin|accept|import|delete|exists|Some|None|_tag|
+                  \\b(send|event|match|with|end|fun|let|type|in|builtin|accept|import|delete|exists|Some|None|_tag|
                   _eventname|Main|_sender|_amount|field|_recipient)\\b
                 '''
         'name': 'keyword.control.scilla'
